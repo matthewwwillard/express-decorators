@@ -1,3 +1,5 @@
+namespace express-decorators
+{
 import * as Express from 'express';
 import 'reflect-metadata';
 
@@ -180,3 +182,4 @@ export function register(router: Express.Router, target: Object) {
     router[route.method].apply(router, args);
   }
 };
+}
