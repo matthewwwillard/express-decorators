@@ -1,4 +1,4 @@
-# express-decorators
+# express_decorators
 
 **NOTE: this has been rewritten for version 1, with some breaking changes**
 
@@ -8,12 +8,12 @@ TypeScript definitions are built in.
 
 ## Installation
 
-    $ npm install --save express-decorators
+    $ npm install --save express_decorators
 
 ## Example
 
 ```js
-import * as web from 'express-decorators';
+import * as web from 'express_decorators';
 import myMiddlewareFunction from './middleware';
 import express from 'express';
 

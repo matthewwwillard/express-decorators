@@ -1,4 +1,4 @@
-declare namespace express-decorators {
+declare namespace express_decorators {
     import 'reflect-metadata';
     class Route {
         method: string;

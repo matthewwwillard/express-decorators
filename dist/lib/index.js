@@ -1,20 +1,20 @@
-var express-decorators;
-(function (express-decorators) {
+var express_decorators;
+(function (express_decorators) {
     class Route {
     }
-    express-decorators.Route = Route;
+    express_decorators.Route = Route;
     ;
-    express-decorators.routesKey = Symbol('routesKey');
-    express-decorators.basePathKey = Symbol('basePathKey');
+    express_decorators.routesKey = Symbol('routesKey');
+    express_decorators.basePathKey = Symbol('basePathKey');
     function getRouteMetadata(target) {
-        let routes = Reflect.getMetadata(express-decorators.routesKey, target);
+        let routes = Reflect.getMetadata(express_decorators.routesKey, target);
         if (!routes) {
             routes = [];
-            Reflect.defineMetadata(express-decorators.routesKey, routes, target);
+            Reflect.defineMetadata(express_decorators.routesKey, routes, target);
         }
         return routes;
     }
-    express-decorators.getRouteMetadata = getRouteMetadata;
+    express_decorators.getRouteMetadata = getRouteMetadata;
     ;
     function route(method, path, middleware = []) {
         return (target, key, descriptor) => {
@@ -25,57 +25,57 @@ var express-decorators;
             return descriptor;
         };
     }
-    express-decorators.route = route;
+    express_decorators.route = route;
     ;
     function basePath(path) {
-        return Reflect.metadata(express-decorators.basePathKey, path);
+        return Reflect.metadata(express_decorators.basePathKey, path);
     }
-    express-decorators.basePath = basePath;
+    express_decorators.basePath = basePath;
     ;
     function get(path = '*', middleware = []) {
         return route('get', path, middleware);
     }
-    express-decorators.get = get;
+    express_decorators.get = get;
     ;
     function post(path = '*', middleware = []) {
         return route('post', path, middleware);
     }
-    express-decorators.post = post;
+    express_decorators.post = post;
     ;
     function put(path = '*', middleware = []) {
         return route('put', path, middleware);
     }
-    express-decorators.put = put;
+    express_decorators.put = put;
     ;
     function patch(path = '*', middleware = []) {
         return route('patch', path, middleware);
     }
-    express-decorators.patch = patch;
+    express_decorators.patch = patch;
     ;
     function del(path = '*', middleware = []) {
         return route('delete', path, middleware);
     }
-    express-decorators.del = del;
+    express_decorators.del = del;
     ;
     function options(path = '*', middleware = []) {
         return route('options', path, middleware);
     }
-    express-decorators.options = options;
+    express_decorators.options = options;
     ;
     function head(path = '*', middleware = []) {
         return route('head', path, middleware);
     }
-    express-decorators.head = head;
+    express_decorators.head = head;
     ;
     function use(path = '*') {
         return route('use', path);
     }
-    express-decorators.use = use;
+    express_decorators.use = use;
     ;
     function all(path = '*', middleware = []) {
         return route('all', path, middleware);
     }
-    express-decorators.all = all;
+    express_decorators.all = all;
     ;
     function param(param) {
         return (target, key, descriptor) => {
@@ -84,7 +84,7 @@ var express-decorators;
             return descriptor;
         };
     }
-    express-decorators.param = param;
+    express_decorators.param = param;
     ;
     function middleware(fn) {
         return (target, key, descriptor) => {
@@ -94,7 +94,7 @@ var express-decorators;
             return descriptor;
         };
     }
-    express-decorators.middleware = middleware;
+    express_decorators.middleware = middleware;
     ;
     function getMiddleware(target, fn) {
         if (fn instanceof Function) {
@@ -113,8 +113,8 @@ var express-decorators;
             : s;
     }
     function getRoutes(target) {
-        let routes = Reflect.getMetadata(express-decorators.routesKey, target) || [];
-        let basePath = Reflect.getMetadata(express-decorators.basePathKey, target.constructor);
+        let routes = Reflect.getMetadata(express_decorators.routesKey, target) || [];
+        let basePath = Reflect.getMetadata(express_decorators.basePathKey, target.constructor);
         if (basePath) {
             routes = routes.map(({ method, path, key, handlers }) => ({ method, path: method === 'param' ? path : trimslash(basePath) + path, key, handlers }));
         }
@@ -138,7 +138,7 @@ var express-decorators;
         }
         return routes;
     }
-    express-decorators.getRoutes = getRoutes;
+    express_decorators.getRoutes = getRoutes;
     ;
     function register(router, target) {
         let routes = getRoutes(target);
@@ -147,7 +147,7 @@ var express-decorators;
             router[route.method].apply(router, args);
         }
     }
-    express-decorators.register = register;
+    express_decorators.register = register;
     ;
-})(express-decorators || (express-decorators = {}));
+})(express_decorators || (express_decorators = {}));
 //# sourceMappingURL=index.js.map

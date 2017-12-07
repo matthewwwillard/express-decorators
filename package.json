@@ -1,6 +1,6 @@
 {
-  "name": "express-decorators",
-  "version": "1.0.2",
+  "name": "express_decorators",
+  "version": "1.0.3",
   "description": "ES2015 decorators for express",
   "main": "dist/lib/index.js",
   "types": "dist/lib/index.d.ts",  
@@ -28,12 +28,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/stewartml/express-decorators.git"
+    "url": "git+https://github.com/stewartml/express_decorators.git"
   },
   "author": "Stewart MacKenzie-Leigh",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/stewartml/express-decorators/issues"
+    "url": "https://github.com/stewartml/express_decorators/issues"
   },
-  "homepage": "https://github.com/stewartml/express-decorators#readme"
+  "homepage": "https://github.com/stewartml/express_decorators#readme"
 }
