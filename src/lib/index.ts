@@ -1,5 +1,4 @@
-namespace express-decorators
-{
+namespace express-decorators {
 import * as Express from 'express';
 import 'reflect-metadata';
 
