@@ -1,6 +1,6 @@
 {
-  "name": "express_decorators",
-  "version": "1.0.4",
+  "name": "express-decorators",
+  "version": "1.0.5",
   "description": "ES2015 decorators for express",
   "main": "dist/lib/index.js",
   "types": "dist/lib/index.d.ts",  
@@ -23,8 +23,7 @@
     "typescript": "^2.1.4"
   },
   "scripts": {
-    "test": "ava dist/test/**/*.js",
-    "prepublish": "tsc"
+    "test": "ava dist/test/**/*.js"
   },
   "repository": {
     "type": "git",
