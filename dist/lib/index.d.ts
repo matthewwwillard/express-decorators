@@ -1,28 +1,31 @@
-declare namespace express_decorators {
-    import 'reflect-metadata';
-    class Route {
-        method: string;
-        path: string;
-        key: string | symbol;
-        handlers: (Express.Handler | Express.RequestParamHandler)[];
-    }
-    type Middleware = Express.Handler | string | symbol;
-    const routesKey: symbol;
-    const basePathKey: symbol;
-    function getRouteMetadata(target: any): Route[];
-    function route(method: string, path: string, middleware?: Middleware[]): <T extends any>(target: Object, key: string | symbol, descriptor: TypedPropertyDescriptor<T>) => TypedPropertyDescriptor<T>;
-    function basePath(path: string): any;
-    function get(path?: string, middleware?: Middleware[]): <T extends any>(target: Object, key: string | symbol, descriptor: TypedPropertyDescriptor<T>) => TypedPropertyDescriptor<T>;
-    function post(path?: string, middleware?: Middleware[]): <T extends any>(target: Object, key: string | symbol, descriptor: TypedPropertyDescriptor<T>) => TypedPropertyDescriptor<T>;
-    function put(path?: string, middleware?: Middleware[]): <T extends any>(target: Object, key: string | symbol, descriptor: TypedPropertyDescriptor<T>) => TypedPropertyDescriptor<T>;
-    function patch(path?: string, middleware?: Middleware[]): <T extends any>(target: Object, key: string | symbol, descriptor: TypedPropertyDescriptor<T>) => TypedPropertyDescriptor<T>;
-    function del(path?: string, middleware?: Middleware[]): <T extends any>(target: Object, key: string | symbol, descriptor: TypedPropertyDescriptor<T>) => TypedPropertyDescriptor<T>;
-    function options(path?: string, middleware?: Middleware[]): <T extends any>(target: Object, key: string | symbol, descriptor: TypedPropertyDescriptor<T>) => TypedPropertyDescriptor<T>;
-    function head(path?: string, middleware?: Middleware[]): <T extends any>(target: Object, key: string | symbol, descriptor: TypedPropertyDescriptor<T>) => TypedPropertyDescriptor<T>;
-    function use(path?: string): <T extends any>(target: Object, key: string | symbol, descriptor: TypedPropertyDescriptor<T>) => TypedPropertyDescriptor<T>;
-    function all(path?: string, middleware?: Middleware[]): <T extends any>(target: Object, key: string | symbol, descriptor: TypedPropertyDescriptor<T>) => TypedPropertyDescriptor<T>;
-    function param(param: string): <T extends any>(target: Object, key: string | symbol, descriptor: TypedPropertyDescriptor<T>) => TypedPropertyDescriptor<T>;
-    function middleware(fn: Middleware): <T extends any>(target: Object, key: string | symbol, descriptor: TypedPropertyDescriptor<T>) => TypedPropertyDescriptor<T>;
-    function getRoutes(target: Object): Route[];
-    function register(router: Express.Router, target: Object): void;
+/// <reference types="express" />
+import * as Express from 'express';
+import 'reflect-metadata';
+export declare class Route {
+    method: string;
+    path: string;
+    key: string | symbol;
+    handlers: (Express.Handler | Express.RequestParamHandler)[];
 }
+export declare type Middleware = Express.Handler | string | symbol;
+export declare const routesKey: symbol;
+export declare const basePathKey: symbol;
+export declare function getRouteMetadata(target: any): Route[];
+export declare function route(method: string, path: string, middleware?: Middleware[]): <T extends Express.Handler>(target: Object, key: string | symbol, descriptor: TypedPropertyDescriptor<T>) => TypedPropertyDescriptor<T>;
+export declare function basePath(path: string): {
+    (target: Function): void;
+    (target: Object, targetKey: string | symbol): void;
+};
+export declare function get(path?: string, middleware?: Middleware[]): <T extends Express.Handler>(target: Object, key: string | symbol, descriptor: TypedPropertyDescriptor<T>) => TypedPropertyDescriptor<T>;
+export declare function post(path?: string, middleware?: Middleware[]): <T extends Express.Handler>(target: Object, key: string | symbol, descriptor: TypedPropertyDescriptor<T>) => TypedPropertyDescriptor<T>;
+export declare function put(path?: string, middleware?: Middleware[]): <T extends Express.Handler>(target: Object, key: string | symbol, descriptor: TypedPropertyDescriptor<T>) => TypedPropertyDescriptor<T>;
+export declare function patch(path?: string, middleware?: Middleware[]): <T extends Express.Handler>(target: Object, key: string | symbol, descriptor: TypedPropertyDescriptor<T>) => TypedPropertyDescriptor<T>;
+export declare function del(path?: string, middleware?: Middleware[]): <T extends Express.Handler>(target: Object, key: string | symbol, descriptor: TypedPropertyDescriptor<T>) => TypedPropertyDescriptor<T>;
+export declare function options(path?: string, middleware?: Middleware[]): <T extends Express.Handler>(target: Object, key: string | symbol, descriptor: TypedPropertyDescriptor<T>) => TypedPropertyDescriptor<T>;
+export declare function head(path?: string, middleware?: Middleware[]): <T extends Express.Handler>(target: Object, key: string | symbol, descriptor: TypedPropertyDescriptor<T>) => TypedPropertyDescriptor<T>;
+export declare function use(path?: string): <T extends Express.Handler>(target: Object, key: string | symbol, descriptor: TypedPropertyDescriptor<T>) => TypedPropertyDescriptor<T>;
+export declare function all(path?: string, middleware?: Middleware[]): <T extends Express.Handler>(target: Object, key: string | symbol, descriptor: TypedPropertyDescriptor<T>) => TypedPropertyDescriptor<T>;
+export declare function param(param: string): <T extends Express.RequestParamHandler>(target: Object, key: string | symbol, descriptor: TypedPropertyDescriptor<T>) => TypedPropertyDescriptor<T>;
+export declare function middleware(fn: Middleware): <T extends Express.Handler>(target: Object, key: string | symbol, descriptor: TypedPropertyDescriptor<T>) => TypedPropertyDescriptor<T>;
+export declare function getRoutes(target: Object): Route[];
+export declare function register(router: Express.Router, target: Object): void;
