@@ -54,7 +54,7 @@ function patch(path = '*', middleware = []) {
 exports.patch = patch;
 ;
 function del(path = '*', middleware = []) {
-    return route('del', path, middleware);
+    return route('delete', path, middleware);
 }
 exports.del = del;
 ;
