@@ -166,14 +166,14 @@ function register(router, target) {
                     for (let route of oldRoutes) {
                         if(route.path == value.route.path && removes.indexOf(index) < 0) {
 
-                            var middlewares = value.route.stack;
-                            middlewares.pop();
-
-                            middlewares.forEach((handles)=>
+                            var middlewares = [];
+                            value.route.stack.forEach((handles)=>
                             {
-                                route.handlers.unshift(handles.handle)
+                                middlewares.push(handles.handle);
                             });
-
+                            middlewares.pop();
+                         
+                            route.handlers = route.handlers.concat(middlewares)
                             removes.push(index);
                         }
                     }
