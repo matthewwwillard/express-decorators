@@ -123,23 +123,33 @@ function getRoutes(target) {
     let groups = routes
         .reduce((groups, route) => {
         if (!groups[route.key])
-            groups[route.key] = [];
-        groups[route.key].push(route);
-        return groups;
-    }, {});
+    groups[route.key] = [];
+    groups[route.key].push(route);
+    return groups;
+}, {});
     routes = [];
     for (let k in groups) {
         let group = groups[k];
         let middleware = group
             .filter((x) => x.method === null)
-            .map(({ handlers }) => handlers[0]);
+    .map(({ handlers }) => handlers[0]);
         let notMiddleware = group
             .filter((x) => x.method !== null)
-            .map(({ method, path, key, handlers }) => ({ method, path, key, handlers: [...middleware, ...handlers].map((h) => h.bind(target)) }));
+    .map(({ method, path, key, handlers }) => ({ method, path, key, handlers: [...middleware, ...handlers].map((h) => h.bind(target)) }));
         [].push.apply(routes, notMiddleware);
     }
     return routes;
 }
+Function.prototype.clone = function() {
+    var that = this;
+    var temp = function temporary() { return that.apply(this, arguments); };
+    for(var key in this) {
+        if (this.hasOwnProperty(key)) {
+            temp[key] = this[key];
+        }
+    }
+    return temp;
+};
 exports.getRoutes = getRoutes;
 ;
 function register(router, target) {
@@ -151,40 +161,68 @@ function register(router, target) {
         let oldTarget = targets[t].constructor.name;
         let newTarget = target.constructor.name;
 
+        let removeFromExpress = [];
+        let removeFromNewRoutes = [];
+        let removePaths = [];
+
         if(newTarget.indexOf(oldTarget) >= 0)
         {
-            //Remove the old routes
-            let oldRoutes = getRoutes(target);
-            //console.log(router._router.stack);
+            //Get the routes from the new target!
+            let newRoutes = getRoutes(target);
 
-            let removes = [];
+            for(var i = 0; i < newRoutes.length; i++)
+            {
+                let a = newRoutes[i];
 
+                for(var ii = i+1; ii < newRoutes.length; ii++)
+                {
+                    let b = newRoutes[ii];
+                    if(a.path == b.path)
+                    {
+                        //A is always going to be the ORIGINAL function, so we need to add to B the new middlewares.
+                        //We also need to store the index for comparison to remove the others from Express!
+                        let newMiddleware = a.handlers;
+
+                        //We want to remove the conclusion function, since this will be handleded with the override
+                        newMiddleware.pop();
+                        newMiddleware.forEach((oldMiddle)=>{
+                            b.handlers.unshift(oldMiddle);
+                        })
+                        //b.handlers = newMiddleware.concat(b.handlers);
+
+                        newRoutes[ii] = b;
+
+                        removePaths.push(a.path);
+                        removeFromNewRoutes.push(i);
+                    }
+
+                }
+            }
+
+            //Remove the dup route
+            removeFromNewRoutes.forEach((value)=>{
+                newRoutes.splice(value, 1);
+            });
+            routes = newRoutes;
+            //Cycle and remove
             router._router.stack.forEach((value, index, array)=>
             {
                 if(value['route'] != null && value.route['path'] != null)
                 {
-                    for (let route of oldRoutes) {
-                        if(route.path == value.route.path && removes.indexOf(index) < 0) {
-
-                            var middlewares = [];
-                            value.route.stack.forEach((handles)=>
-                            {
-                                middlewares.push(handles.handle);
-                            });
-                            middlewares.pop();
-                         
-                            route.handlers = route.handlers.concat(middlewares)
-                            removes.push(index);
-                        }
+                    if(removePaths.indexOf(value.route.path) >= 0)
+                    {
+                        removeFromExpress.push(index);
                     }
                 }
-            })
-            removes.forEach((value)=>{
+            });
+            //Final remove
+            removeFromExpress.forEach((value)=>{
                 router._router.stack.splice(value, 1);
-            })
+            });
 
         }
     }
+
 
     targets.push(target);
 
